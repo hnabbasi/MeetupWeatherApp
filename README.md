@@ -18,6 +18,7 @@ Houston Xamarin Meetup Group - App From Scratch Part Series Code
 1. AppCenter Setup
 2. AzureDevOps Pipeline
 
+## Topics
 As things evolve, we will adjust the material being covered. Here are some of the items that will be covered,
 * XAML
 * MVVM
