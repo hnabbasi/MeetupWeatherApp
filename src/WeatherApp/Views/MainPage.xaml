@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:local="clr-namespace:WeatherApp" 
+             x:Class="WeatherApp.Views.MainPage"
+             Title="{Binding Title}">
+    
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        
+        <Grid.Padding>
+            <OnPlatform x:TypeArguments="Thickness" 
+                        iOS="12,30,12,12"
+                        Android="12"/>
+        </Grid.Padding>
+        
+        <StackLayout Orientation="Horizontal">
+            <SearchBar 
+                       Placeholder="Enter Zip Code"
+                        Text="{Binding ZipCode}"
+                       HorizontalOptions="FillAndExpand"/>
+            <Button Text="GO" Command="{Binding SearchCommand}"/>
+        </StackLayout>
+        
+        <Frame CornerRadius="12" VerticalOptions="Center" Margin="24" Grid.Row="1" HeightRequest="200">
+            <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
+                <Label Text="{Binding Temp}" FontSize="Large"/>
+                <Label Text="{Binding City}"/>
+            </StackLayout>
+        </Frame>
+    </Grid>
+</ContentPage>

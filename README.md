@@ -1,7 +1,6 @@
 # Weather App
 Houston Xamarin Meetup Group - App From Scratch Part Series Code
-
-
+![Weather App](media/weatherapp.png)
 ## Day 1
 1. Intro to Xamarin.Forms
 2. Build UI
