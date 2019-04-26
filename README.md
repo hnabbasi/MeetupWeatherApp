@@ -1,6 +1,10 @@
 # Weather App
 Houston Xamarin Meetup Group - App From Scratch Part Series Code
 
+## $50 Challenge
+
+> Before the May meeting, come up with (and implement) a better UI design.  Best design wins $50 Amazon gift card
+
 ## Goal
 The goal of this series is to make a weather app that looks somewhat similar to this beauty,
 
@@ -13,7 +17,7 @@ The goal of this series is to make a weather app that looks somewhat similar to 
 4. Code Structure (S.O.L.I.D principles)
 
 ## Day 2
-1. MVVM Framework
+1. ~MVVM Framework~
 2. Connect to API
 3. Xamarin.Essentials
 4. Save cities
