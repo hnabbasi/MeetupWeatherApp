@@ -9,6 +9,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
         
         <Grid.Padding>
@@ -31,5 +32,13 @@
                 <Label Text="{Binding City}"/>
             </StackLayout>
         </Frame>
+        
+        <ListView Footer="" Grid.Row="2" ItemsSource="{Binding SavedLocations}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <TextCell Text="{Binding Name}" Detail="{Binding Zip}" />
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
     </Grid>
 </ContentPage>

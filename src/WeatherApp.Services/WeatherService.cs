@@ -3,7 +3,7 @@ using WeatherApp.Models;
 using WeatherApp.Services;
 using WeatherApp.Services.Interfaces;
 using Xamarin.Forms;
-
+/*
 [assembly:Dependency(typeof(WeatherService))]
 namespace WeatherApp.Services
 {
@@ -28,3 +28,4 @@ namespace WeatherApp.Services
         }
     }
 }
+*/

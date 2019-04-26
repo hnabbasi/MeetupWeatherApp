@@ -10,10 +10,19 @@ namespace WeatherApp.Views
 {
     public partial class MainPage : ContentPage
     {
+        MainPageViewModel ViewModel;
+
         public MainPage()
         {
             InitializeComponent();
-            BindingContext = new MainPageViewModel();
+            BindingContext = ViewModel = new MainPageViewModel();
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+
+            ViewModel.GetLocation();
         }
     }
 }
