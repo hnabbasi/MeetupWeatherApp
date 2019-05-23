@@ -20,10 +20,10 @@ namespace WeatherApp.ViewModels
             Title = "Welcome";
             //_weatherService = DependencyService.Resolve<IWeatherService>();
             _weatherService = RestService.For<IWeatherService>("http://api.openweathermap.org");
-            
+
             SearchCommand = new Command(OnSearchTapped);
 
-            SavedLocations = new ObservableCollection<SavedLocation>();
+            SavedLocations = new ObservableCollection<CurrentWeather>();
 
             GetLocations();
 
@@ -36,13 +36,15 @@ namespace WeatherApp.ViewModels
 
             SavedLocations.Clear();
 
-            foreach(var l in locations)
+            foreach (var l in locations)
             {
-                SavedLocations.Add(l);
+                var w = await _weatherService.GetTemp(l.Zip, apikey);
+                w.Zip = l.Zip;
+                SavedLocations.Add(w);
             }
         }
 
-        public ObservableCollection<SavedLocation> SavedLocations { get; set; }
+        public ObservableCollection<CurrentWeather> SavedLocations { get; set; }
 
         public async void GetLocation()
         {
@@ -64,18 +66,35 @@ namespace WeatherApp.ViewModels
 
         private async void OnSearchTapped(object obj)
         {
-            var currentWeather = await _weatherService.GetTemp(ZipCode, apikey);
+            Current = await _weatherService.GetTemp(ZipCode, apikey);
 
-            Temp = currentWeather.Main.Temp.ToString();
-            City = currentWeather.Name;
+            Temp = Current.Main.Temp.ToString();
+            City = Current.Name;
+            Current.Zip = ZipCode;
+            Icon = $"http://openweathermap.org/img/w/{Current.WeatherWeather[0].Icon}.png";
 
-            var exists = SavedLocations.Any(x => x.Name == City && x.Zip == ZipCode);
+
+            var exists = SavedLocations.Any(x => x.Name == City);
 
             if (!exists)
             {
                 var save = new SavedLocation { Zip = ZipCode, Name = City };
                 await App.Database.SaveItemAsync(save);
-                SavedLocations.Add(save);
+                SavedLocations.Add(Current);
+            }
+        }
+
+        private CurrentWeather _current;
+        public CurrentWeather Current
+        {
+            get
+            {
+                return _current;
+            }
+            set
+            {
+                _current = value;
+                OnPropertyChanged();
             }
         }
 
@@ -99,6 +118,14 @@ namespace WeatherApp.ViewModels
             get { return _city; }
             set { _city = value; OnPropertyChanged(); }
         }
+
+        private string _icon;
+        public string Icon
+        {
+            get { return _icon; }
+            set { _icon = value; OnPropertyChanged(); }
+        }
+
 
         public ICommand SearchCommand { get; }
 

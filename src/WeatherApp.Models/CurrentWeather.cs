@@ -14,6 +14,21 @@ namespace WeatherApp.Models
 
     public partial class CurrentWeather
     {
+        [JsonIgnore]
+        public string Zip
+        {
+            get; set;
+        }
+
+        [JsonIgnore]
+        public string Icon
+        {
+            get
+            {
+                return $"http://openweathermap.org/img/w/{WeatherWeather[0].Icon}.png";
+            }
+        }
+
         [JsonProperty("coord")]
         public Coord Coord { get; set; }
 

@@ -1,44 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
-             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
-             xmlns:local="clr-namespace:WeatherApp" 
-             x:Class="WeatherApp.Views.MainPage"
-             Title="{Binding Title}">
-    
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:WeatherApp" x:Class="WeatherApp.Views.MainPage" Title="{Binding Title}">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <local:UnixDateTimeConverter x:Key="UnixDateTime" />
+            <local:TempColorConverter x:Key="TempColor" />
+        </ResourceDictionary>
+    </ContentPage.Resources>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        
         <Grid.Padding>
-            <OnPlatform x:TypeArguments="Thickness" 
-                        iOS="12,30,12,12"
-                        Android="12"/>
+            <OnPlatform x:TypeArguments="Thickness" iOS="12,30,12,12" Android="12" />
         </Grid.Padding>
-        
         <StackLayout Orientation="Horizontal">
-            <SearchBar 
-                       Placeholder="Enter Zip Code"
-                        Text="{Binding ZipCode}"
-                       HorizontalOptions="FillAndExpand"/>
-            <Button Text="GO" Command="{Binding SearchCommand}"/>
+            <SearchBar Placeholder="Enter Zip Code" Text="{Binding ZipCode}" HorizontalOptions="FillAndExpand" />
+            <Button Text="GO" Command="{Binding SearchCommand}" />
         </StackLayout>
-        
-        <Frame CornerRadius="12" VerticalOptions="Center" Margin="24" Grid.Row="1" HeightRequest="200">
+        <Frame BackgroundColor="{Binding Current.Main.Temp, Converter={StaticResource TempColor}}" CornerRadius="12" VerticalOptions="Center" Margin="24" Grid.Row="1" HeightRequest="200">
             <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
-                <Label Text="{Binding Temp}" FontSize="Large"/>
-                <Label Text="{Binding City}"/>
+                <Image Scale="3" Source="{Binding Icon}" />
+                <Label Text="{Binding Temp}" FontSize="Large" />
+                <Label Text="{Binding City}" />
+                <Label Text="{Binding Current.WeatherWeather[0].Main}" />
+                <Label Text="{Binding Current.Main.TempMax, StringFormat='High: {0}'}" />
+                <Label Text="{Binding Current.Main.TempMin, StringFormat='Low: {0}'}" />
+                <Label Text="{Binding Current.Sys.Sunrise, StringFormat='Sunrise: {0:t}', Converter={StaticResource UnixDateTime}}" />
+                <Label Text="{Binding Current.Sys.Sunset, StringFormat='Sunrise: {0:t}', Converter={StaticResource UnixDateTime}}" />
             </StackLayout>
+            <Frame.GestureRecognizers>
+                <TapGestureRecognizer Tapped="Handle_Tapped" />
+            </Frame.GestureRecognizers>
         </Frame>
-        
-        <ListView Footer="" Grid.Row="2" ItemsSource="{Binding SavedLocations}">
+        <ListView ItemTapped="Handle_ItemTapped" Footer="" Grid.Row="2" ItemsSource="{Binding SavedLocations}">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <TextCell Text="{Binding Name}" Detail="{Binding Zip}" />
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                    <ImageCell ImageSource="{Binding Icon}" Text="{Binding Name}" Detail="{Binding Main.Temp}" />
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
     </Grid>
 </ContentPage>
