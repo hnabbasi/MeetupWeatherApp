@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:local="clr-namespace:WeatherApp" x:Class="WeatherApp.Views.MainPage" Title="{Binding Title}">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:local="clr-namespace:WeatherApp" 
+             x:Class="WeatherApp.Views.MainPage" 
+             Title="{Binding Title}"
+             Visual="Material">
     <ContentPage.Resources>
         <ResourceDictionary>
             <local:UnixDateTimeConverter x:Key="UnixDateTime" />
             <local:TempColorConverter x:Key="TempColor" />
         </ResourceDictionary>
-    </ContentPage.Resources>
-    <Grid>
+        </ContentPage.Resources>
+    <Grid BackgroundColor="{StaticResource Primary}">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
@@ -16,10 +21,14 @@
             <OnPlatform x:TypeArguments="Thickness" iOS="12,30,12,12" Android="12" />
         </Grid.Padding>
         <StackLayout Orientation="Horizontal">
-            <SearchBar Placeholder="Enter Zip Code" Text="{Binding ZipCode}" HorizontalOptions="FillAndExpand" />
+            <SearchBar Placeholder="Enter Zip Code"
+                       Text="{Binding ZipCode}" 
+                       HorizontalOptions="FillAndExpand"
+                       BackgroundColor="{StaticResource Primary}"/>
             <Button Text="GO" Command="{Binding SearchCommand}" />
         </StackLayout>
-        <Frame BackgroundColor="{Binding Current.Main.Temp, Converter={StaticResource TempColor}}" CornerRadius="12" VerticalOptions="Center" Margin="24" Grid.Row="1" HeightRequest="200">
+        <Frame BackgroundColor="{Binding Current.Main.Temp, Converter={StaticResource TempColor}}" 
+               CornerRadius="20" VerticalOptions="Center" Margin="24" Grid.Row="1" HeightRequest="200">
             <StackLayout HorizontalOptions="Center" VerticalOptions="Center">
                 <Image Scale="3" Source="{Binding Icon}" />
                 <Label Text="{Binding Temp}" FontSize="Large" />
@@ -34,10 +43,17 @@
                 <TapGestureRecognizer Tapped="Handle_Tapped" />
             </Frame.GestureRecognizers>
         </Frame>
-        <ListView ItemTapped="Handle_ItemTapped" Footer="" Grid.Row="2" ItemsSource="{Binding SavedLocations}">
+        <ListView BackgroundColor="{StaticResource Primary}" 
+                  ItemTapped="Handle_ItemTapped" 
+                  Footer="" Grid.Row="2" 
+                  ItemsSource="{Binding SavedLocations}"
+                  SeparatorColor="White">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <ImageCell ImageSource="{Binding Icon}" Text="{Binding Name}" Detail="{Binding Main.Temp}" />
+                    <ImageCell ImageSource="{Binding Icon}" 
+                               Text="{Binding Name}" 
+                               Detail="{Binding Main.Temp}"
+                               TextColor="White"/>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>

@@ -3,5 +3,16 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
              x:Class="WeatherApp.App">
     <Application.Resources>
+        <Color x:Key="Primary">#b6e3ff</Color>
+        <Color x:Key="Accent">#ff9800</Color>
+        
+        <Style TargetType="ContentPage">
+            <Setter Property="BackgroundColor" Value="{StaticResource Primary}"/>
+        </Style>
+        
+        <Style TargetType="Button">
+            <Setter Property="BackgroundColor" Value="{StaticResource Accent}"/>
+            <Setter Property="TextColor" Value="White"/>
+        </Style>
     </Application.Resources>
 </Application>
